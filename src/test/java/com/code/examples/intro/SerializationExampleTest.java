@@ -1,36 +1,33 @@
 package com.code.examples.intro;
 
 import com.code.examples.intro.serialization.SerializationExample;
-import org.junit.Assert;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 
-/**
- * Created by rtheramb on 7/11/2015.
- */
 public class SerializationExampleTest {
-    /**
-     * Test of getInstance method, of class Singleton.
-     */
-    @org.junit.Test
+
+    @Test
     public void testSerialization() throws IOException, ClassNotFoundException {
         Person person = new Person();
         person.setName("Java");
         SerializationExample example = new SerializationExample();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         example.write(out, person);
-        String personString = new String(out.toByteArray());
-        InputStream inStream = new ByteArrayInputStream(personString.getBytes());
+        // Pass the byte array directly to the input stream
+        ByteArrayInputStream inStream = new ByteArrayInputStream(out.toByteArray());
         Person resultPerson = example.read(inStream, person);
-        Assert.assertEquals(resultPerson.getName(), person.getName());
+        assertEquals(resultPerson.getName(), person.getName());
     }
 
-    @org.junit.Test
+    @Test
     public void testSerializationNested() throws IOException, ClassNotFoundException {
         Room room = new Room();
         Room.Door[] doors = new Room.Door[1];
@@ -39,20 +36,20 @@ public class SerializationExampleTest {
         SerializationExample example = new SerializationExample();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         example.write(out, room);
-        String personString = new String(out.toByteArray());
-        InputStream inStream = new ByteArrayInputStream(personString.getBytes());
+        // Pass the byte array directly to the input stream
+        ByteArrayInputStream inStream = new ByteArrayInputStream(out.toByteArray());
         Room result = example.read(inStream, room);
-        Assert.assertNotNull(result);
+        assertNotNull(result);
         for (Room.Door doorElem : room.getDoors()) {
-            Assert.assertNotSame(doorElem.getState(), State.CLOSED);
+            assertNotSame(doorElem.getState(), State.CLOSED);
         }
     }
 }
 
 enum State {OPEN, CLOSED};
 
-class Room implements  Serializable {
-    class Door implements  Serializable {
+class Room implements Serializable {
+    class Door implements Serializable {
         private transient State state;
 
         public Door(State state) {
@@ -81,9 +78,6 @@ class Room implements  Serializable {
 }
 
 class Person implements Serializable {
-    /**
-     *
-     */
     private static final long serialVersionUID = 2656125837769884719L;
     private String name;
 
@@ -99,5 +93,4 @@ class Person implements Serializable {
     public String toString() {
         return "Person [name=" + name + "]";
     }
-
 }
