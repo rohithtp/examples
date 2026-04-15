@@ -18,9 +18,14 @@ public class MyThreadApp extends Thread {
           break;
         }
         Thread.sleep(1000l);
-      } catch (Throwable t) {
+      } catch (InterruptedException e) {
         running.set(false);
         Thread.currentThread().interrupt(); // Restore status
+        System.out.println("Thread interrupted: " + Thread.currentThread().getName());
+        break; // Exit the loop gracefully
+      } catch (Throwable t) {
+        running.set(false);
+        System.out.println("Unexpected error: " + t.getMessage());
         break; // Exit the loop gracefully
       }
     }
@@ -45,7 +50,13 @@ public class MyThreadApp extends Thread {
                 }));
   }
 
-  protected void finalize() {
-    System.out.println("finalize " + Thread.currentThread().getName());
+  // Avoid using finalize method
+  @Override
+  protected void finalize() throws Throwable {
+    try {
+      System.out.println("finalize " + Thread.currentThread().getName());
+    } finally {
+      super.finalize();
+    }
   }
 }
