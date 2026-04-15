@@ -1,0 +1,7 @@
+com/code/examples/intro/State.class
+com/code/examples/intro/Room.class
+com/code/examples/intro/SerializationExampleTest.class
+com/code/examples/intro/Person.class
+com/code/examples/patterns/create/single/SingletonTest.class
+com/code/examples/intro/Room$Door.class
+com/code/examples/InterfaceExamplesTest.class

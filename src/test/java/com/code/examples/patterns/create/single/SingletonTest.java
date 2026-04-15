@@ -5,27 +5,23 @@
  */
 package com.code.examples.patterns.create.single;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  *
  * @author rtheramb
  */
 public class SingletonTest {
-    
+
     /**
      * Test of getInstance method, of class Singleton.
      */
-    @org.junit.Test
+    @Test
     public void testGetInstance() {
         Singleton expResult = Singleton.getInstance();
         Singleton result = Singleton.getInstance();
         assertEquals(expResult, result);
     }
-    
 }
