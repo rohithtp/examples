@@ -2,6 +2,7 @@ package com.code.examples.stream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,5 +34,11 @@ public class ListStreamExample {
     int sum = numbers.stream().reduce(0, Integer::sum);
 
     System.out.println("Sum of All Numbers: " + sum);
+
+    List<List<Integer>> listOfLists = Arrays.asList(List.of(1, 2), List.of(3, 4));
+    for (Integer number :
+        listOfLists.stream().flatMap(Collection::stream).collect(Collectors.toList())) {
+      System.out.println(number);
+    }
   }
 }
